@@ -11,6 +11,7 @@ export class GameController {
   @Get()
   getGamesByQuery(@Query() query: ListAllGamesDto): Promise<any> {
     if (query && typeof query.search === 'string') {
+      console.log('Search Query:', query.search);
       return this.gameService.getGamesByQuery(query.search, query.offset ?? 0);
     }
     return this.gameService.getAllGamesList(query.offset ?? 0);

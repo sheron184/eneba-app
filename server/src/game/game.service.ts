@@ -7,7 +7,7 @@ export class GameService {
     //
   }
   async getGamesByQuery(query?: string, offset: number = 0): Promise<any> {
-    await this.prisma.game
+    return this.prisma.game
       .findMany({
         where: {
           title: {
@@ -18,6 +18,7 @@ export class GameService {
         take: 5,
       })
       .then((payload) => {
+        console.log('Found Games:', payload);
         return {
           data: payload,
           count: payload.length,
@@ -36,9 +37,13 @@ export class GameService {
       });
   }
   async getAllGamesList(offset: number): Promise<any> {
-    return this.prisma.game.findMany({
-      skip: Number(offset),
-      take: 5,
-    });
+    return {
+      data: await this.prisma.game.findMany({
+        skip: Number(offset),
+        take: 5,
+      }),
+      count: await this.prisma.game.count(),
+      status: 'success',
+    };
   }
 }

@@ -7,21 +7,26 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import Image from "next/image";
+import { GameDTO } from "@/lib/api/game.dto";
 
-const GameCard = () => {
+const GameCard = ({ game }: { game: GameDTO }) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Card Title</CardTitle>
-        <CardDescription>Card Description</CardDescription>
-        <CardAction>Card Action</CardAction>
+        <CardTitle>{game.title}</CardTitle>
       </CardHeader>
       <CardContent>
-        <p>Card Content</p>
+        <CardDescription>{game.description}</CardDescription>
+        <p className="mt-2 font-semibold">Price: ${game.price}</p>
+        <Image
+          src={`/${game.image}`}
+          alt={game.title}
+          width={128}
+          height={128}
+          className="mt-2 w-32 h-32 object-cover"
+        />
       </CardContent>
-      <CardFooter>
-        <p>Card Footer</p>
-      </CardFooter>
     </Card>
   );
 }
