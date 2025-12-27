@@ -1,8 +1,17 @@
-import TopBar from "./components/top-bar";
+'use client';
+
+import { useEffect } from "react";
+import TopBar from "../components/top-bar";
 
 export default function Home() {
+  const initData = async () => {
+
+  };
+  useEffect(() => {
+    initData();
+  }, []);
   return (
-    <div>
+    <div className="bg-[#4517ab] text-white">
       <div className="w-[80%] mx-auto">
         <TopBar />
       </div>

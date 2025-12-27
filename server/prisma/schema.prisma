@@ -17,9 +17,20 @@ datasource db {
 }
 
 model Game {
-  id        Int      @id @default(autoincrement())
-  title     String
-  image     String
-  price     Float
-  createdAt DateTime @default(now())
+  id              Int      @id @default(autoincrement())
+  title           String
+  image           String
+  price           Float
+  discountedPrice Float?
+  discountPercent Int?
+  cashbackAmount  Float?
+  platform        String
+  region          String
+  publisher       String?
+  genre           String?
+  releaseDate     DateTime?
+  description     String?
+  rating          Float?   @default(0.0)
+  stock           Int      @default(0)
+  createdAt       DateTime @default(now())
 }
