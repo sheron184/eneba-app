@@ -6,20 +6,25 @@ import useGameStore from "@/store/game-store";
 
 const TopBar = () => {
   const [query, setQuery] = useState("");
-  const { error, data, isLoading } = useFindGames(query);
+  const { data } = useFindGames(query);
   const setGames = useGameStore((state) => state.setGames);
+  const allGameList = useGameStore((state) => state.allGameList);
+
   const handleSearch = (query: string) => {
-    console.log("Searching for:", query);
     if (query.length > 0) {
       setQuery(query);
+    } else {
+      // Reset to original list when query is empty
+      setGames(allGameList);
     }
   }
+
   useEffect(() => {
-    console.log("Data:", data);
     if (data && Array.isArray(data)) {
       setGames(data);
     }
-  }, [data]);
+  }, [data, setGames]);
+
   return (
     <div className="w-full h-16 flex items-center px-4 justify-around align-middle">
       <Logo />
