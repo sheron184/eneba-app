@@ -15,11 +15,11 @@ const queryClient = new QueryClient({
 export default function Home() {
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="bg-[#4517ab] text-white">
-        <div className="w-[80%] mx-auto">
+      <div className="text-white">
+        <div className="mx-auto bg-[#4517ab]">
           <TopBar />
         </div>
-        <div className="w-[80%] mx-auto mt-4">
+        <div className="w-[80%] mx-auto mt-12">
           <div>
             <GameList />
           </div>

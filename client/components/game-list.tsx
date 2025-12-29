@@ -25,7 +25,7 @@ const GameList = () => {
   }
   return (
     <Suspense fallback={<div>Loading games...</div>}>
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-4 gap-4">
         {games?.map((game: GameDTO) => (
           <GameCard key={game.id} game={game} />
         ))}

@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`bg-[#4517ab] ${geist.variable} text-white`}
+        className={`${geist.variable} text-white bg-linear-to-b from-[#120338] to-[#1c0536] min-h-screen ${poppins.variable} font-sans`}
       >
         {children}
       </body>
