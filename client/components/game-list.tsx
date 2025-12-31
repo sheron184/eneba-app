@@ -4,6 +4,7 @@ import useGameStore from "@/store/game-store";
 import { useEffect } from "react";
 import GameCard from "./game-card";
 import { Suspense } from "react";
+import { Skeleton } from "./ui/skeleton";
 
 const GameList = () => {
   const { data, isLoading, error } = useGames();
@@ -20,11 +21,17 @@ const GameList = () => {
   }, [data, setGames, setAllGameList]);
 
   if (isLoading) {
-    return <div>Loading games...</div>;
+    return (
+      <div className="grid grid-cols-4 gap-4">
+        {Array.from({ length: 5 }).map((_, index) => (
+          <Skeleton key={index} className="h-75 w-full rounded-md" />
+        ))}
+      </div>
+    );
   }
 
   if (!isLoading && !games?.length) {
-    return <div>No games found.</div>;
+    return <div className="h-[75vh]">No games found.</div>;
   }
 
   if (error) {
