@@ -49,23 +49,23 @@ cd eneba-app
 
 ```
 pnpm install
-# If monorepo with frontend/api folders:
-cd frontend && pnpm install
-cd ../api && pnpm install
+# If monorepo with client/server folders:
+cd client && pnpm install
+cd ../server && pnpm install
 ```
 
 1. Environment
 
 - Create env files for each service.
 
-Frontend (/frontend/.env.local)
+Frontend (/client/.env.local)
 
 ```
 NEXT_PUBLIC_API_URL=http://localhost:3001    # API origin
 NEXT_PUBLIC_APP_NAME="Eneba App"
 ```
 
-API (/api/.env)
+API (/server/.env)
 
 ```
 NODE_ENV=development
@@ -78,7 +78,7 @@ REDIS_URL=redis://localhost:6379    # optional
 1. Prepare database & Prisma
 
 ```
-# from api/
+# from server/
 pnpm prisma generate
 pnpm prisma migrate dev --name init   # runs migrations and creates DB schema
 ```
@@ -88,7 +88,7 @@ pnpm prisma migrate dev --name init   # runs migrations and creates DB schema
 - API (NestJS)
 
 ```
-cd api
+cd server
 pnpm dev   # or pnpm start:dev (depends on package.json)
 # API default: http://localhost:3001
 ```
@@ -96,7 +96,7 @@ pnpm dev   # or pnpm start:dev (depends on package.json)
 - Frontend (Next.js)
 
 ```
-cd frontend
+cd client
 pnpm dev   # default: http://localhost:3000
 ```
 
@@ -105,7 +105,7 @@ pnpm dev   # default: http://localhost:3000
 - Frontend:
 
 ```
-cd frontend
+cd client
 pnpm build
 pnpm start   # run production server (Next.js)
 ```
@@ -113,7 +113,7 @@ pnpm start   # run production server (Next.js)
 - API:
 
 ```
-cd api
+cd server
 pnpm build
 pnpm start:prod   # or `node dist/main.js`
 ```
@@ -142,15 +142,15 @@ pnpm dlx pm2@latest install pm2
 sudo pnpm dlx pm2@latest
 ```
 
-- Example ecosystem file (api/ecosystem.config.js)
+- Example ecosystem file (server/ecosystem.config.js)
 
 ```
 module.exports = {
   apps: [
     {
-      name: "eneba-api",
+      name: "eneba-server",
       script: "dist/main.js",
-      cwd: "/var/www/eneba/api",
+      cwd: "/var/www/eneba/server",
       instances: 1,
       exec_mode: "cluster",
       env: {
@@ -159,9 +159,9 @@ module.exports = {
       },
     },
     {
-      name: "eneba-frontend",
+      name: "eneba-client",
       script: "node server.js", // if using a custom Next.js server, otherwise serve via Next start
-      cwd: "/var/www/eneba/frontend",
+      cwd: "/var/www/eneba/client",
       instances: 1,
       env: {
         NODE_ENV: "production",
@@ -175,15 +175,15 @@ module.exports = {
 - Start with PM2:
 
 ```
-cd /var/www/eneba/api
+cd /var/www/eneba/server
 pnpm install
 pnpm build
-pm2 start ecosystem.config.js --only eneba-api
+pm2 start ecosystem.config.js --only eneba-server
 
-cd /var/www/eneba/frontend
+cd /var/www/eneba/client
 pnpm install
 pnpm build
-pm2 start ecosystem.config.js --only eneba-frontend
+pm2 start ecosystem.config.js --only eneba-client
 pm2 save
 ```
 
@@ -198,7 +198,7 @@ server {
     listen 80;
     server_name yourdomain.com www.yourdomain.com;
 
-    location /api/ {
+    location /server/ {
         proxy_pass http://127.0.0.1:3001/;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
@@ -229,7 +229,7 @@ sudo systemctl reload nginx
 
 1. Process monitoring & logs
 
-- PM2 provides logs: `pm2 logs eneba-api`
+- PM2 provides logs: `pm2 logs eneba-server`
 - Ensure PM2 restarts on reboot:
 
 ```
@@ -251,15 +251,15 @@ sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com
 - Keep .env values out of source control; use DigitalOcean Secrets or environment variables.
 - Back up MySQL and Prisma migrations. Use `prisma migrate deploy` in CI/production.
 - Use a process manager (PM2) and monitor uptime; consider Autoscale / Load Balancer for higher availability.
-- Restrict CORS in NestJS to your frontend domain.
+- Restrict CORS in NestJS to your client domain.
 - Use a CDN for static assets (Next.js static export or image CDN).
 
 ## Useful commands (summary)
 
 - Install: `pnpm install`
-- API dev: `cd api && pnpm dev`
-- Frontend dev: `cd frontend && pnpm dev`
-- Prisma generate/migrate: `cd api && pnpm prisma generate && pnpm prisma migrate dev`
-- Build frontend: `cd frontend && pnpm build`
-- Build api: `cd api && pnpm build`
+- API dev: `cd server && pnpm dev`
+- Frontend dev: `cd client && pnpm dev`
+- Prisma generate/migrate: `cd server && pnpm prisma generate && pnpm prisma migrate dev`
+- Build client: `cd client && pnpm build`
+- Build server: `cd server && pnpm build`
 - PM2 start: `pm2 start ecosystem.config.js`
