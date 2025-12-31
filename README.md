@@ -1,9 +1,6 @@
-
 # Eneba App — Game List (Next.js 16 + NestJS + Prisma + MySQL)
 
-Short, focused README describing architecture, tech stack, local usage (pnpm), and deployment notes (DigitalOcean + Nginx + PM2 reverse proxy).
-
-## What it is
+### What it is
 
 Eneba App is a game-listing web application:
 
@@ -266,15 +263,3 @@ sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com
 - Build frontend: `cd frontend && pnpm build`
 - Build api: `cd api && pnpm build`
 - PM2 start: `pm2 start ecosystem.config.js`
-
-## License
-
-Default: MIT (add LICENSE file if applicable).
-
-If you want, I can:
-
-- produce a minimal `ecosystem.config.js` tuned to your repo,
-- generate a ready-to-use Nginx config with HTTPS + redirects,
-- add a concise `.env.example` for frontend and api.
-
-Which of those would you like next?
