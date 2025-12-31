@@ -3,6 +3,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import TopBar from "../components/top-bar";
 import GameList from "@/components/game-list";
+import Footer from "@/components/footer";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -24,6 +25,7 @@ export default function Home() {
             <GameList />
           </div>
         </div>
+        <Footer />
       </div>
     </QueryClientProvider>
   );
