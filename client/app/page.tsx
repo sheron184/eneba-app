@@ -16,7 +16,7 @@ const queryClient = new QueryClient({
 export default function Home() {
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="text-white">
+      <div className="text-white min-h-[500px]">
         <div className="mx-auto bg-[#4517ab]">
           <TopBar />
         </div>
